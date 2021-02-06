@@ -2,7 +2,7 @@ package storekata;
 
 import storekata.models.Item;
 import storekata.models.Order;
-import storekata.models.exceptions.ParseException;
+import storekata.models.exceptions.AppLogicException;
 import storekata.repositories.ItemRepository;
 
 import java.time.LocalDate;
@@ -43,7 +43,7 @@ public class InputParser {
             return new Order(purchaseDate, items);
         }catch (Exception e){
             String message = String.format("unable to parse '%s'", order);
-            throw new ParseException(message);
+            throw new AppLogicException(message);
         }
     }
 

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import storekata.models.Item;
 import storekata.models.Order;
-import storekata.models.exceptions.ParseException;
+import storekata.models.exceptions.AppLogicException;
 import storekata.testdoubles.ItemRepositoryStub;
 
 import java.time.LocalDate;
@@ -99,7 +99,7 @@ public class InputParserTests {
 
     @Test
     public void GivenBadInput_WhenParse_ThenThrowParseException(){
-        Assertions.assertThrows(ParseException.class, () -> {
+        Assertions.assertThrows(AppLogicException.class, () -> {
             parser.parse("2 turn tables and a microphone");
         });
     }
