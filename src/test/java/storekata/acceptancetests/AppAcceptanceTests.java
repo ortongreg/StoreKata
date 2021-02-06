@@ -101,6 +101,13 @@ public class AppAcceptanceTests {
         assertEquals("unable to parse 'Im a little teapot'", printStreamSpy.lastPrint);
     }
 
+    @Test
+    public void OnlyApplyEachDiscountOnce(){
+        App.main(new String[]{"4 tins of soup, 2 loaves of bread, 1 single apple and 1 bottle of milk, bought in 3 days time"});
+
+        assertEquals("5.19", printStreamSpy.lastPrint);
+    }
+
     @AfterEach
     public void AfterEach(){
         System.setOut(console);
