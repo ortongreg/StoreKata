@@ -76,4 +76,13 @@ public class InputParserTests {
         List<String> expectedItems = Arrays.asList("apple", "apple", "soup", "soup");
         assertEquals(expectedItems, result.getItems());
     }
+
+    @Test
+    public void GivenApplesAndSoupAndBreadWithCommaBoughtToday_WhenParse_ThenParsesApplesAndSoup(){
+        String input = "2 apples, a loaf of bread and 2 tins of soup, bought today";
+        Order result = parser.parse(input);
+
+        List<String> expectedItems = Arrays.asList("apple", "apple", "bread", "soup", "soup");
+        assertEquals(expectedItems, result.getItems());
+    }
 }

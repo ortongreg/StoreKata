@@ -43,7 +43,7 @@ public class InputParser {
     private List<String> parseItems(String itemsString){
         List<String> result = new ArrayList<>();
 
-        List<String> purchasedTypes = Arrays.asList(itemsString.split("and\\s"));
+        List<String> purchasedTypes = Arrays.asList(itemsString.split("(and|,)\\s"));
         purchasedTypes.forEach(purchasedType -> {
             result.addAll(parseItem(purchasedType));
         });

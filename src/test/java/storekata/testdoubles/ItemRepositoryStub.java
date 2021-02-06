@@ -9,6 +9,6 @@ public class ItemRepositoryStub implements ItemRepository {
 
     @Override
     public List<String> allItems() {
-        return Arrays.asList("apple", "soup");
+        return Arrays.asList("apple", "bread", "soup");
     }
 }
