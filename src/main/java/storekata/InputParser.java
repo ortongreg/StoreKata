@@ -42,11 +42,17 @@ public class InputParser {
     private List<String> parseItems(String itemsString){
         List<String> result = new ArrayList<>();
 
+        result.addAll(parseItem(itemsString));
+        return result;
+    }
+
+    private List<String> parseItem(String itemString){
+        List<String> result = new ArrayList<>();
         String itemType = itemRepository.allItems().stream()
-                .filter(type -> itemsString.toLowerCase(Locale.ROOT).contains(type))
+                .filter(type -> itemString.toLowerCase(Locale.ROOT).contains(type))
                 .collect(Collectors.toList()).get(0);
 
-        Matcher matcher = ITEM_PATTERN.matcher(itemsString);
+        Matcher matcher = ITEM_PATTERN.matcher(itemString);
         matcher.matches();
 
         int itemCount = canParseInt(matcher.group(1)) ?

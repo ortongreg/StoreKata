@@ -1,5 +1,6 @@
 package storekata;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import storekata.models.Order;
 import storekata.testdoubles.ItemRepositoryStub;
@@ -65,6 +66,16 @@ public class InputParserTests {
         Order result = parser.parse(input);
 
         List<String> expectedItems = Arrays.asList("apple", "apple");
+        assertEquals(expectedItems, result.getItems());
+    }
+
+    @Test
+    @Disabled("Refactoring Item parser to support multiple types under green")
+    public void GivenApplesAndSoupBoughtToday_WhenParse_ThenParsesApplesAndSoup(){
+        String input = "2 apples and 2 tins of soup, bought today";
+        Order result = parser.parse(input);
+
+        List<String> expectedItems = Arrays.asList("apple", "apple", "soup", "soup");
         assertEquals(expectedItems, result.getItems());
     }
 }
