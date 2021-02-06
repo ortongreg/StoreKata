@@ -16,20 +16,28 @@ public class PurchaseTotalCalculator {
     }
 
     public double calculatePurchaseTotal(Order order){
+        List<Discount> discounts = getDiscounts();
+        List<Item> purchasedItems = applyDiscountToPurchasedItems(order, discounts);
+
+        double sum = purchasedItems.stream().mapToDouble(Item::getCost).sum();
+        return roundToCents(sum);
+    }
+
+    private List<Item> applyDiscountToPurchasedItems(Order order, List<Discount> discounts) {
+        for (Discount discount : discounts) {
+            order = discount.applyDiscount(order);
+        }
+        return order.getItems();
+    }
+
+    private List<Discount> getDiscounts() {
         List<Discount> discounts;
         try {
             discounts = discountRepository.getDiscounts();
         }catch (Exception e){
             throw new AppLogicException("unable to retrieve available discounts");
         }
-
-        for (Discount discount : discounts) {
-            order = discount.applyDiscount(order);
-        }
-
-        List<Item> purchasedItems = order.getItems();
-        double sum = purchasedItems.stream().mapToDouble(Item::getCost).sum();
-        return roundToCents(sum);
+        return discounts;
     }
 
     private double roundToCents(double sum) {
