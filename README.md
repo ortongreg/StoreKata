@@ -10,6 +10,9 @@
 > 
 > The important thing to note is that the Discount implementation is abstracted and decoupled from outside the DiscountRepository.  So if there were any issues with the "dynamic" implementation I believe the scope of change is limited.
 
+### Test Doubles
+Commits introducing a type of Test Double are called out by starting with TEST DOUBLE - {TYPE}
+
 ## Build tools
 I used:
  - Gradle v 6.7
