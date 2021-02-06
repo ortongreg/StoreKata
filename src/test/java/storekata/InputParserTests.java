@@ -2,6 +2,7 @@ package storekata;
 
 import org.junit.jupiter.api.Test;
 import storekata.models.Order;
+import storekata.testdoubles.ItemRepositoryStub;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InputParserTests {
-    InputParser parser = new InputParser();
+    InputParser parser = new InputParser(new ItemRepositoryStub());
 
     @Test
     public void GivenOnlySoupBoughtToday_WhenParse_ThenParsesCorrectDay(){
@@ -55,6 +56,15 @@ public class InputParserTests {
         Order result = parser.parse(input);
 
         List<String> expectedItems = Arrays.asList("soup", "soup", "soup");
+        assertEquals(expectedItems, result.getItems());
+    }
+
+    @Test
+    public void GivenApplesBoughtToday_WhenParse_ThenParsesApple(){
+        String input = "2 Apples, bought today";
+        Order result = parser.parse(input);
+
+        List<String> expectedItems = Arrays.asList("apple", "apple");
         assertEquals(expectedItems, result.getItems());
     }
 }
