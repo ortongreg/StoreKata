@@ -6,6 +6,14 @@ import java.util.stream.Collectors;
 
 public abstract class Discount {
 
+    private final LocalDate startDateInclusive;
+    private final LocalDate endDateInclusive;
+
+    public Discount(LocalDate startDateInclusive, LocalDate endDateInclusive){
+        this.startDateInclusive = startDateInclusive;
+        this.endDateInclusive = endDateInclusive;
+    }
+
     public abstract Order applyDiscount(Order order);
 
     protected List<Item> getItemsOfType(String type, List<Item> items) {

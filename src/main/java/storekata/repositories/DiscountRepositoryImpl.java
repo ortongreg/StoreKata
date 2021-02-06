@@ -18,7 +18,7 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
     private Discount soupAndBreadDeal() {
         LocalDate discountStartDateInclusive = LocalDate.now().minusDays(1);
         LocalDate discountEndDateExclusive = discountStartDateInclusive.plusDays(7);
-        return new Discount() {
+        return new Discount(discountStartDateInclusive, discountEndDateExclusive) {
             @Override
             public Order applyDiscount(Order order) {
                 List<Item> items = order.getItems();
@@ -44,7 +44,7 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
     private Discount appleDeal(){
         LocalDate discountStartDateInclusive = LocalDate.now().plusDays(3);
         LocalDate discountEndDateExclusive = LocalDate.now().plusYears(100);
-        return new Discount() {
+        return new Discount(discountStartDateInclusive, discountEndDateExclusive) {
             @Override
             public Order applyDiscount(Order order) {
                 List<Item> appleItems = getItemsOfType("apple", order.getItems());

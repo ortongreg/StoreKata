@@ -6,7 +6,6 @@ import storekata.models.Order;
 import storekata.repositories.DiscountRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class FakeDiscountRepository implements DiscountRepository {
 
     public void withHalfOffDiscount(){
         discounts.add(
-            new Discount() {
+            new Discount(null, null) {
                 @Override
                 public Order applyDiscount(Order order) {
                     Item item = order.getItems().get(0);
