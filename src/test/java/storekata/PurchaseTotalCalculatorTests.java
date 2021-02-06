@@ -24,4 +24,12 @@ public class PurchaseTotalCalculatorTests {
         ));
         assertEquals(2.46, cost);
     }
+
+    @Test
+    public void GivenMultipleDifferentItems_WhenCalculatePurchaseTotal_ThenReturnsSum(){
+        double cost = calculator.calculatePurchaseTotal(Arrays.asList(
+                new Item("Foo", 1.23), new Item("Bar", 4.56)
+        ));
+        assertEquals(5.79, cost);
+    }
 }

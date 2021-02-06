@@ -6,6 +6,7 @@ import java.util.List;
 
 public class PurchaseTotalCalculator {
     public double calculatePurchaseTotal(List<Item> items){
-        return items.get(0).getCost() * items.size();
+        double sum = items.stream().mapToDouble(Item::getCost).sum();
+        return (double) Math.round(sum * 100) / 100;
     }
 }
