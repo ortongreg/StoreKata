@@ -17,7 +17,7 @@ public class AppLogic {
 
     public String run(String arg) {
         Order order = inputParser.parse(arg);
-        double cost = purchaseTotalCalculator.calculatePurchaseTotal(order.getItems());
+        double cost = purchaseTotalCalculator.calculatePurchaseTotal(order);
         return twoPlaces.format(cost);
     }
 }
