@@ -27,4 +27,13 @@ public class InputParserTests {
         LocalDate fiveDaysFromNow = LocalDate.now().plusDays(5);
         assertEquals(fiveDaysFromNow, result.getPurchaseDate());
     }
+
+    @Test
+    public void GivenOneSoupBoughtInTwoDigitDaysTime_WhenParse_ThenParsesCorrectDay(){
+        String input = "1 tin of soup, bought in 10 days time";
+        Order result = parser.parse(input);
+
+        LocalDate fiveDaysFromNow = LocalDate.now().plusDays(10);
+        assertEquals(fiveDaysFromNow, result.getPurchaseDate());
+    }
 }
