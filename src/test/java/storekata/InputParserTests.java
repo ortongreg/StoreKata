@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import storekata.models.Order;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -35,5 +37,14 @@ public class InputParserTests {
 
         LocalDate fiveDaysFromNow = LocalDate.now().plusDays(10);
         assertEquals(fiveDaysFromNow, result.getPurchaseDate());
+    }
+
+    @Test
+    public void GivenOneSoupBoughtToday_WhenParse_ThenParsesOneSoup(){
+        String input = "1 tin of soup, bought today";
+        Order result = parser.parse(input);
+
+        List<String> expectedItems = Collections.singletonList("soup");
+        assertEquals(expectedItems, result.getItems());
     }
 }

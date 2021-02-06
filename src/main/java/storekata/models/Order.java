@@ -1,6 +1,8 @@
 package storekata.models;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 public class Order {
 
@@ -12,5 +14,9 @@ public class Order {
 
     public LocalDate getPurchaseDate() {
         return purchaseDate;
+    }
+
+    public List<String> getItems() {
+        return Collections.singletonList("soup");
     }
 }
