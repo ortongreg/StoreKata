@@ -42,6 +42,13 @@ public class AppAcceptanceTests {
         assertEquals("1.70", printStreamSpy.lastPrint);
     }
 
+    @Test
+    public void OrderWithADealStartingInTheFuture(){
+        App.main(new String[]{"6 apples and a bottle of milk, bought in 5 days time"});
+
+        assertEquals("1.84", printStreamSpy.lastPrint);
+    }
+
     @AfterEach
     public void AfterEach(){
         System.setOut(console);

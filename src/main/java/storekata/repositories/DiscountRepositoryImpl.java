@@ -4,14 +4,15 @@ import storekata.models.Discount;
 import storekata.models.Item;
 import storekata.models.Order;
 
-import java.util.Collections;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DiscountRepositoryImpl  implements DiscountRepository{
     @Override
     public List<Discount> getDiscounts() {
-        return Collections.singletonList(soupAndBreadDeal());
+        return Arrays.asList(soupAndBreadDeal(), appleDeal());
     }
 
     private Discount soupAndBreadDeal() {
@@ -29,6 +30,25 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
                     items.add(new Item(firstBread.getName(), firstBread.getCost()/2));
                 }
                 return new Order(order.getPurchaseDate(), items);
+            }
+        };
+    }
+
+    private Discount appleDeal(){
+        return new Discount() {
+            @Override
+            public Order applyDiscount(Order order) {
+                List<Item> items = order.getItems();
+                List<Item> appleItems = getItemsOfType("apple", items);
+                if(!appleItems.isEmpty() && order.getPurchaseDate().isAfter(LocalDate.now().plusDays(2))){
+                    for (Item appleItem : appleItems) {
+                        items.remove(appleItem);
+                        items.add(new Item(appleItem.getName(), appleItem.getCost() * .9));
+                    }
+                    order = new Order(order.getPurchaseDate(), items);
+                }
+
+                return order;
             }
         };
     }
