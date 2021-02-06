@@ -42,8 +42,12 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
     }
 
     private Discount appleDeal(){
-        LocalDate discountStartDateInclusive = LocalDate.now().plusDays(3);
-        LocalDate discountEndDateExclusive = LocalDate.now().plusYears(100);
+        LocalDate now = LocalDate.now();
+        LocalDate discountStartDateInclusive = now.plusDays(3);
+
+        LocalDate expiryMonth = now.plusMonths(2);
+        LocalDate discountEndDateExclusive = expiryMonth.withDayOfMonth(1);
+
         return new Discount(discountStartDateInclusive, discountEndDateExclusive) {
             @Override
             public Order applyDiscount(Order order) {

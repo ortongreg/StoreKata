@@ -7,6 +7,8 @@ import storekata.App;
 import storekata.testdoubles.PrintStreamSpy;
 
 import java.io.PrintStream;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -54,6 +56,28 @@ public class AppAcceptanceTests {
         App.main(new String[]{"2 tins of soup and a loaf of bread, bought in 6 days time"});
 
         assertEquals("2.10", printStreamSpy.lastPrint);
+    }
+
+    @Test
+    public void OrderWithDealThatExpiresOnDynamicDate_JustExpired(){
+        LocalDate now = LocalDate.now();
+        LocalDate startOfNextNextMonth = now.plusMonths(2).withDayOfMonth(1);
+        long daysUntilStartOfNextNextMonth = now.until(startOfNextNextMonth, ChronoUnit.DAYS);
+        String input = String.format("a single apple, bought in %s days time", daysUntilStartOfNextNextMonth);
+        App.main(new String[]{input});
+
+        assertEquals("0.10", printStreamSpy.lastPrint);
+    }
+
+    @Test
+    public void OrderWithDealThatExpiresOnDynamicDate_LastDay(){
+        LocalDate now = LocalDate.now();
+        LocalDate startOfNextNextMonth = now.plusMonths(2).withDayOfMonth(1).minusDays(1);
+        long daysUntilStartOfNextNextMonth = now.until(startOfNextNextMonth, ChronoUnit.DAYS);
+        String input = String.format("a single apple, bought in %s days time", daysUntilStartOfNextNextMonth);
+        App.main(new String[]{input});
+
+        assertEquals("0.09", printStreamSpy.lastPrint);
     }
 
     @AfterEach
