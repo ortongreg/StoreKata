@@ -35,12 +35,13 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
     }
 
     private Discount appleDeal(){
+        LocalDate discountStartDateInclusive = LocalDate.now().plusDays(3);
         return new Discount() {
             @Override
             public Order applyDiscount(Order order) {
                 List<Item> items = order.getItems();
                 List<Item> appleItems = getItemsOfType("apple", items);
-                if(!appleItems.isEmpty() && order.getPurchaseDate().isAfter(LocalDate.now().plusDays(2))){
+                if(!appleItems.isEmpty() && isValidPurchaseDate(order.getPurchaseDate(), discountStartDateInclusive)){
                     for (Item appleItem : appleItems) {
                         items.remove(appleItem);
                         items.add(new Item(appleItem.getName(), appleItem.getCost() * .9));
@@ -55,5 +56,9 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
 
     private List<Item> getItemsOfType(String type, List<Item> items) {
         return items.stream().filter(item -> item.getName().equals(type)).collect(Collectors.toList());
+    }
+
+    private boolean isValidPurchaseDate(LocalDate purchaseDate, LocalDate dealStartInclusive) {
+        return !purchaseDate.isBefore(dealStartInclusive);
     }
 }
