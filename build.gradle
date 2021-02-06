@@ -5,6 +5,12 @@ plugins {
 group 'org.gorton'
 version '1.0-SNAPSHOT'
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'storekata.App'
+    }
+}
+
 repositories {
     mavenCentral()
 }
