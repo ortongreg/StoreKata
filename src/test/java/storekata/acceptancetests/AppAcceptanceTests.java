@@ -49,6 +49,13 @@ public class AppAcceptanceTests {
         assertEquals("1.84", printStreamSpy.lastPrint);
     }
 
+    @Test
+    public void OrderWithADealThatHasEnded(){
+        App.main(new String[]{"2 tins of soup and a loaf of bread, bought in 6 days time"});
+
+        assertEquals("2.10", printStreamSpy.lastPrint);
+    }
+
     @AfterEach
     public void AfterEach(){
         System.setOut(console);

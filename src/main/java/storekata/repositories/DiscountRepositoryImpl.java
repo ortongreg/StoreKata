@@ -17,6 +17,8 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
     }
 
     private Discount soupAndBreadDeal() {
+        LocalDate discountStartDateInclusive = LocalDate.now().minusDays(1);
+        LocalDate discountEndDateExclusive = discountStartDateInclusive.plusDays(7);
         return new Discount() {
             @Override
             public Order applyDiscount(Order order) {
@@ -24,7 +26,13 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
                 long soupCount = getItemsOfType("soup", items).size();
                 List<Item> breadItems = getItemsOfType("bread", items);
 
-                if( soupCount >= 2 && !breadItems.isEmpty())
+                boolean validPurchaseDate = isValidPurchaseDate(
+                        order.getPurchaseDate(),
+                        discountStartDateInclusive,
+                        discountEndDateExclusive
+                );
+
+                if( validPurchaseDate && soupCount >= 2 && !breadItems.isEmpty() )
                 {
                     List<Item> eligibleItems = Collections.singletonList(breadItems.get(0));
                     order = discountedOrder(order, eligibleItems, .5);
@@ -36,12 +44,19 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
 
     private Discount appleDeal(){
         LocalDate discountStartDateInclusive = LocalDate.now().plusDays(3);
+        LocalDate discountEndDateExclusive = LocalDate.now().plusYears(100);
         return new Discount() {
             @Override
             public Order applyDiscount(Order order) {
                 List<Item> appleItems = getItemsOfType("apple", order.getItems());
 
-                if(!appleItems.isEmpty() && isValidPurchaseDate(order.getPurchaseDate(), discountStartDateInclusive)){
+                boolean validPurchaseDate = isValidPurchaseDate(
+                        order.getPurchaseDate(),
+                        discountStartDateInclusive,
+                        discountEndDateExclusive
+                );
+
+                if(!appleItems.isEmpty() && validPurchaseDate){
                     order = discountedOrder(order, appleItems, .9);
                 }
                 return order;
@@ -53,8 +68,12 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
         return items.stream().filter(item -> item.getName().equals(type)).collect(Collectors.toList());
     }
 
-    private boolean isValidPurchaseDate(LocalDate purchaseDate, LocalDate dealStartInclusive) {
-        return !purchaseDate.isBefore(dealStartInclusive);
+    private boolean isValidPurchaseDate(
+            LocalDate purchaseDate, LocalDate discountStartInclusive, LocalDate discountEndExclusive
+    ) {
+        boolean isPurchasedAfterStart = !purchaseDate.isBefore(discountStartInclusive);
+        boolean isPurchasedBeforeEnd = purchaseDate.isBefore(discountEndExclusive);
+        return isPurchasedAfterStart && isPurchasedBeforeEnd;
     }
 
     private Order discountedOrder(Order order, List<Item> eligibleItems, double discountedRate) {
@@ -63,8 +82,7 @@ public class DiscountRepositoryImpl  implements DiscountRepository{
             items.remove(item);
             items.add(new Item(item.getName(), item.getCost() * discountedRate));
         }
-        order = new Order(order.getPurchaseDate(), items);
-        return order;
+        return new Order(order.getPurchaseDate(), items);
     }
 
 }
