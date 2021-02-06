@@ -2,7 +2,10 @@ package storekata.acceptancetests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import storekata.App;
 import storekata.testdoubles.PrintStreamSpy;
 
@@ -106,6 +109,20 @@ public class AppAcceptanceTests {
         App.main(new String[]{"4 tins of soup, 2 loaves of bread, 1 single apple and 1 bottle of milk, bought in 3 days time"});
 
         assertEquals("5.19", printStreamSpy.lastPrint);
+    }
+
+    @DisplayName("Check against kata requirements")
+    @ParameterizedTest(name = "input:''{0}")
+    @CsvSource({
+            "'3 tins of soup and 2 loaves of bread, bought today', 3.15",
+            "'6 apples and a bottle of milk, bought today', 1.90",
+            "'6 apples and a bottle of milk, bought in 5 days time', 1.84",
+            "'3 apples, 2 tins of soup and a loaf of bread, bought in 5 days time', 1.97"
+    })
+    public void CalculateTotalCost(String input, String expectedCost){
+        App.main(new String[]{input});
+
+        assertEquals(expectedCost, printStreamSpy.lastPrint);
     }
 
     @AfterEach
