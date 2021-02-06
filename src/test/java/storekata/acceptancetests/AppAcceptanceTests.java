@@ -2,6 +2,7 @@ package storekata.acceptancetests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import storekata.App;
 import storekata.testdoubles.PrintStreamSpy;
@@ -26,6 +27,14 @@ public class AppAcceptanceTests {
         App.main(new String[]{"2 tins of soup, bought today"});
 
         assertEquals("1.30", printStreamSpy.lastPrint);
+    }
+
+    @Test
+    @Disabled("Driving multiple items no deal")
+    public void OrderWithMultipleItemsNoDeal(){
+        App.main(new String[]{"2 tins of soup and a bottle of milk, bought today"});
+
+        assertEquals("2.60", printStreamSpy.lastPrint);
     }
 
     @AfterEach
