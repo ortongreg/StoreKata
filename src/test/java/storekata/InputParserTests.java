@@ -18,4 +18,13 @@ public class InputParserTests {
         LocalDate today = LocalDate.now();
         assertEquals(today, result.getPurchaseDate());
     }
+
+    @Test
+    public void GivenOneSoupBoughtInFiveDaysTime_WhenParse_ThenParsesCorrectDay(){
+        String input = "1 tin of soup, bought in 5 days time";
+        Order result = parser.parse(input);
+
+        LocalDate fiveDaysFromNow = LocalDate.now().plusDays(5);
+        assertEquals(fiveDaysFromNow, result.getPurchaseDate());
+    }
 }
