@@ -87,6 +87,13 @@ public class AppAcceptanceTests {
         assertEquals("2.75", printStreamSpy.lastPrint);
     }
 
+    @Test
+    public void GlobalErrorHandling(){
+        App.main(null);
+
+        assertEquals("unable to calculate total", printStreamSpy.lastPrint);
+    }
+
     @AfterEach
     public void AfterEach(){
         System.setOut(console);

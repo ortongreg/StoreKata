@@ -5,11 +5,15 @@ import storekata.repositories.ItemRepositoryImpl;
 
 public class App {
     public static void main(String[] args){
-        String appResult = new AppLogic(
-                new InputParser(new ItemRepositoryImpl()),
-                new PurchaseTotalCalculator(new DiscountRepositoryImpl())
-        ).run(args[0]);
+        try{
+            String appResult = new AppLogic(
+                    new InputParser(new ItemRepositoryImpl()),
+                    new PurchaseTotalCalculator(new DiscountRepositoryImpl())
+            ).run(args[0]);
 
-        System.out.println(appResult);
+            System.out.println(appResult);
+        }catch (Exception e){
+            System.out.println("unable to calculate total");
+        }
     }
 }
