@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import storekata.models.Order;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,6 +46,15 @@ public class InputParserTests {
         Order result = parser.parse(input);
 
         List<String> expectedItems = Collections.singletonList("soup");
+        assertEquals(expectedItems, result.getItems());
+    }
+
+    @Test
+    public void GivenMoreThanOneSoupBoughtToday_WhenParse_ThenParsesMultipleSoup(){
+        String input = "3 tins of soup, bought today";
+        Order result = parser.parse(input);
+
+        List<String> expectedItems = Arrays.asList("soup", "soup", "soup");
         assertEquals(expectedItems, result.getItems());
     }
 }
