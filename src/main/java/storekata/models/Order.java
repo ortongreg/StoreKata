@@ -1,12 +1,13 @@
 package storekata.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
 
-    private LocalDate purchaseDate;
-    private List<String> items;
+    private final LocalDate purchaseDate;
+    private final List<String> items;
 
     public Order(LocalDate purchaseDate, List<String> items){
         this.purchaseDate = purchaseDate;
@@ -15,5 +16,5 @@ public class Order {
 
     public LocalDate getPurchaseDate() { return purchaseDate; }
 
-    public List<String> getItems() { return items; }
+    public List<String> getItems() { return new ArrayList<>(items); }
 }
