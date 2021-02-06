@@ -3,6 +3,7 @@ package storekata;
 import storekata.models.Discount;
 import storekata.models.Item;
 import storekata.models.Order;
+import storekata.models.exceptions.AppLogicException;
 import storekata.repositories.DiscountRepository;
 
 import java.util.List;
@@ -15,7 +16,13 @@ public class PurchaseTotalCalculator {
     }
 
     public double calculatePurchaseTotal(Order order){
-        List<Discount> discounts = discountRepository.getDiscounts();
+        List<Discount> discounts;
+        try {
+            discounts = discountRepository.getDiscounts();
+        }catch (Exception e){
+            throw new AppLogicException("unable to retrieve available discounts");
+        }
+
         for (Discount discount : discounts) {
             order = discount.applyDiscount(order);
         }

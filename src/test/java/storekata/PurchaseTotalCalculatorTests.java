@@ -1,17 +1,16 @@
 package storekata;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import storekata.acceptancetests.FakeDiscountRepository;
-import storekata.models.Discount;
 import storekata.models.Item;
 import storekata.models.Order;
+import storekata.models.exceptions.AppLogicException;
+import storekata.repositories.DiscountRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -52,6 +51,15 @@ public class PurchaseTotalCalculatorTests {
         fakeDiscountRepository.withHalfOffDiscount();
         double cost = calculator.calculatePurchaseTotal( toOrder( new Item("DiscountSushi", 2)) );
         assertEquals(1, cost);
+    }
+
+    @Test
+    public void GivenExceptionDuringDiscountCalculation_WhenRun_ThenCalculationExceptionIsThrown(){
+        DiscountRepository dummyDiscountRepository = null;
+        calculator = new PurchaseTotalCalculator(dummyDiscountRepository);
+        Assertions.assertThrows(AppLogicException.class, () -> {
+            calculator.calculatePurchaseTotal( toOrder(new Item("Foo", 1.23) ) );
+        });
     }
 
     private Order toOrder(Item... items){
