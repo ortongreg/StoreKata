@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import storekata.acceptancetests.FakeDiscountRepository;
 import storekata.models.Item;
 import storekata.models.Order;
 
@@ -22,7 +23,7 @@ public class AppLogicTests {
 
     @BeforeEach
     public void BeforeEach(){
-        purchaseTotalCalculator = new PurchaseTotalCalculator();
+        purchaseTotalCalculator = new PurchaseTotalCalculator(new FakeDiscountRepository());
         appLogic = new AppLogic(inputParser, purchaseTotalCalculator);
     }
 
