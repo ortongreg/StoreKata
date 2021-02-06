@@ -18,14 +18,17 @@ public class InputParser {
         matcher.matches();
         String purchaseDayString = matcher.group(1);
 
+        LocalDate purchaseDate = parsePurchaseDate(purchaseDayString);
+        return new Order(purchaseDate);
+    }
+
+    private LocalDate parsePurchaseDate(String purchaseDayString) {
         Matcher purchaseDayMatcher = PURCHASE_DAY_PATTERN.matcher(purchaseDayString);
         int purchaseDateOffset = 0;
         if(purchaseDayMatcher.matches()){
             String purchaseDateOffsetStr = purchaseDayMatcher.group(1);
             purchaseDateOffset = Integer.parseInt(purchaseDateOffsetStr);
         }
-        LocalDate purchaseDate = LocalDate.now().plusDays(purchaseDateOffset);
-
-        return new Order(purchaseDate);
+        return LocalDate.now().plusDays(purchaseDateOffset);
     }
 }
