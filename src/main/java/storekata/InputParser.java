@@ -5,6 +5,7 @@ import storekata.repositories.ItemRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -42,7 +43,10 @@ public class InputParser {
     private List<String> parseItems(String itemsString){
         List<String> result = new ArrayList<>();
 
-        result.addAll(parseItem(itemsString));
+        List<String> purchasedTypes = Arrays.asList(itemsString.split("and\\s"));
+        purchasedTypes.forEach(purchasedType -> {
+            result.addAll(parseItem(purchasedType));
+        });
         return result;
     }
 
