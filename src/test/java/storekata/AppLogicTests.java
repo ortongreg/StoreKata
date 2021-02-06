@@ -28,7 +28,7 @@ public class AppLogicTests {
     }
 
     @Test
-    public void GivenTotalThatNeedsFormattingPad_WhenTotalCost_ThenTotalIsFormattedToTwoDecimals(){
+    public void GivenTotalThatNeedsFormattingPad_WhenRun_ThenTotalIsFormattedToTwoDecimals(){
         String input = "a big pickle, bought today";
         Item pickle = new Item("pickle", 1.50);
         when(inputParser.parse(input)).thenReturn(new Order(null, Collections.singletonList(pickle)));

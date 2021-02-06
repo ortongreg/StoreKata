@@ -1,5 +1,6 @@
 package storekata;
 
+import storekata.models.exceptions.AppLogicException;
 import storekata.repositories.DiscountRepositoryImpl;
 import storekata.repositories.ItemRepositoryImpl;
 
@@ -12,7 +13,9 @@ public class App {
             ).run(args[0]);
 
             System.out.println(appResult);
-        }catch (Exception e){
+        } catch (AppLogicException e){
+            System.out.println(e.getMessage());
+        } catch (Exception e){
             System.out.println("unable to calculate total");
         }
     }

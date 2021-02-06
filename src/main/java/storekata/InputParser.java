@@ -2,6 +2,7 @@ package storekata;
 
 import storekata.models.Item;
 import storekata.models.Order;
+import storekata.models.exceptions.ParseException;
 import storekata.repositories.ItemRepository;
 
 import java.time.LocalDate;
@@ -30,15 +31,20 @@ public class InputParser {
     }
 
     public Order parse(String order){
-        Matcher matcher = ORDER_PATTERN.matcher(order);
-        matcher.matches();
+        try{
+            Matcher matcher = ORDER_PATTERN.matcher(order);
+            matcher.matches();
 
-        List<Item> items = parseItems(matcher.group(1));
+            List<Item> items = parseItems(matcher.group(1));
 
-        String purchaseDayString = matcher.group(2);
-        LocalDate purchaseDate = parsePurchaseDate(purchaseDayString);
+            String purchaseDayString = matcher.group(2);
+            LocalDate purchaseDate = parsePurchaseDate(purchaseDayString);
 
-        return new Order(purchaseDate, items);
+            return new Order(purchaseDate, items);
+        }catch (Exception e){
+            String message = String.format("unable to parse '%s'", order);
+            throw new ParseException(message);
+        }
     }
 
     private List<Item> parseItems(String itemsString){

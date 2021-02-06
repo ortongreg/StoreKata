@@ -1,8 +1,10 @@
 package storekata;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import storekata.models.Item;
 import storekata.models.Order;
+import storekata.models.exceptions.ParseException;
 import storekata.testdoubles.ItemRepositoryStub;
 
 import java.time.LocalDate;
@@ -93,6 +95,13 @@ public class InputParserTests {
 
         LocalDate twoDaysAgo = LocalDate.now().minusDays(2);
         assertEquals(twoDaysAgo, result.getPurchaseDate());
+    }
+
+    @Test
+    public void GivenBadInput_WhenParse_ThenThrowParseException(){
+        Assertions.assertThrows(ParseException.class, () -> {
+            parser.parse("2 turn tables and a microphone");
+        });
     }
 
     private List<Item> toItems(String... itemNames){

@@ -2,7 +2,6 @@ package storekata.acceptancetests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import storekata.App;
 import storekata.testdoubles.PrintStreamSpy;
@@ -96,8 +95,7 @@ public class AppAcceptanceTests {
     }
 
     @Test
-    @Disabled("Driving Input Parse error handling")
-    public void ParseErrorHandling(){
+    public void AppLogicErrorHandling(){
         App.main(new String[]{"Im a little teapot"});
 
         assertEquals("unable to parse 'Im a little teapot'", printStreamSpy.lastPrint);
