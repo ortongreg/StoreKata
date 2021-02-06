@@ -13,14 +13,14 @@ public class PurchaseTotalCalculatorTests {
 
     @Test
     public void GivenOneItem_WhenCalculatePurchaseTotal_ThenReturnsThatItemCost(){
-        double cost = calculator.calculatePurchaseTotal(Collections.singletonList(new Item("Foo")));
+        double cost = calculator.calculatePurchaseTotal(Collections.singletonList(new Item("Foo", 1.23)));
         assertEquals(1.23, cost);
     }
 
     @Test
     public void GivenMultipleOfSameItem_WhenCalculatePurchaseTotal_ThenReturnsSum(){
         double cost = calculator.calculatePurchaseTotal(Arrays.asList(
-                new Item("Foo"), new Item("Foo")
+                new Item("Foo", 1.23), new Item("Foo", 1.23)
         ));
         assertEquals(2.46, cost);
     }

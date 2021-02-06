@@ -89,7 +89,7 @@ public class InputParserTests {
     private List<Item> toItems(String... itemNames){
         List<Item> items = new ArrayList<>();
         for (String itemName : itemNames) {
-            items.add(new Item(itemName));
+            items.add(new Item(itemName, 1.23));
         }
         return items;
     }
