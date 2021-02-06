@@ -2,6 +2,7 @@ package storekata;
 
 public class App {
     public static void main(String[] args){
-        System.out.println("1.30");
+        String appResult = new AppLogic().run(args[0]);
+        System.out.println(appResult);
     }
 }
