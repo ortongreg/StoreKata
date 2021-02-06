@@ -2,6 +2,7 @@ package storekata.acceptancetests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import storekata.App;
 import storekata.testdoubles.PrintStreamSpy;
@@ -33,6 +34,14 @@ public class AppAcceptanceTests {
         App.main(new String[]{"2 tins of soup and a bottle of milk, bought today"});
 
         assertEquals("2.60", printStreamSpy.lastPrint);
+    }
+
+    @Test
+    @Disabled("Failing test to drive applying a deal to an order")
+    public void OrderWithADeal(){
+        App.main(new String[]{"2 tins of soup and a loaf of bread, bought today"});
+
+        assertEquals("1.70", printStreamSpy.lastPrint);
     }
 
     @AfterEach
