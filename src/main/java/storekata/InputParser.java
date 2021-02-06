@@ -14,10 +14,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class InputParser {
-    private static final String ORDER_PATTERN_STR = "(.*),\\sbought\\s(today|(in\\s\\d+\\sdays\\stime))";
+    private static final String ORDER_PATTERN_STR = "(.*),\\sbought\\s(today|(in\\s-?\\d+\\sdays\\stime))";
     private static final Pattern ORDER_PATTERN = Pattern.compile(ORDER_PATTERN_STR);
 
-    private static final String PURCHASE_DAY_PATTERN_STR = "in\\s(\\d+)\\sdays\\stime";
+    private static final String PURCHASE_DAY_PATTERN_STR = "in\\s(-?\\d+)\\sdays\\stime";
     private static final Pattern PURCHASE_DAY_PATTERN = Pattern.compile(PURCHASE_DAY_PATTERN_STR);
 
     private static final String ITEM_PATTERN_STR = "(a|\\d+).*";

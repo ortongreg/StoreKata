@@ -80,6 +80,13 @@ public class AppAcceptanceTests {
         assertEquals("0.09", printStreamSpy.lastPrint);
     }
 
+    @Test
+    public void OrderPurchasedInThePast_SupportMinusInput(){
+        App.main(new String[]{"3 tins of soup and a loaf of bread, bought in -2 days time"});
+
+        assertEquals("2.75", printStreamSpy.lastPrint);
+    }
+
     @AfterEach
     public void AfterEach(){
         System.setOut(console);

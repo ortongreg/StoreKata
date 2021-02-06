@@ -86,6 +86,15 @@ public class InputParserTests {
         assertEquals(expectedItems, result.getItems());
     }
 
+    @Test
+    public void GivenMinusDays_WhenParse_ThenParsesDateInThePast(){
+        String input = "3 tins of soup and a loaf of bread, bought in -2 days time";
+        Order result = parser.parse(input);
+
+        LocalDate twoDaysAgo = LocalDate.now().minusDays(2);
+        assertEquals(twoDaysAgo, result.getPurchaseDate());
+    }
+
     private List<Item> toItems(String... itemNames){
         List<Item> items = new ArrayList<>();
         for (String itemName : itemNames) {
