@@ -1,7 +1,9 @@
 package storekata.repositories;
 
+import storekata.models.Item;
+
 import java.util.List;
 
 public interface ItemRepository {
-    List<String> allItems();
+    List<Item> allItems();
 }

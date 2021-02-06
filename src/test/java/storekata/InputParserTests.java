@@ -1,12 +1,12 @@
 package storekata;
 
 import org.junit.jupiter.api.Test;
+import storekata.models.Item;
 import storekata.models.Order;
 import storekata.testdoubles.ItemRepositoryStub;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,7 +46,7 @@ public class InputParserTests {
         String input = "1 tin of soup, bought today";
         Order result = parser.parse(input);
 
-        List<String> expectedItems = Collections.singletonList("soup");
+        List<Item> expectedItems = toItems("soup");
         assertEquals(expectedItems, result.getItems());
     }
 
@@ -55,7 +55,7 @@ public class InputParserTests {
         String input = "3 tins of soup, bought today";
         Order result = parser.parse(input);
 
-        List<String> expectedItems = Arrays.asList("soup", "soup", "soup");
+        List<Item> expectedItems = toItems("soup", "soup", "soup");
         assertEquals(expectedItems, result.getItems());
     }
 
@@ -64,7 +64,7 @@ public class InputParserTests {
         String input = "2 Apples, bought today";
         Order result = parser.parse(input);
 
-        List<String> expectedItems = Arrays.asList("apple", "apple");
+        List<Item> expectedItems = toItems("apple", "apple");
         assertEquals(expectedItems, result.getItems());
     }
 
@@ -73,7 +73,7 @@ public class InputParserTests {
         String input = "2 apples and 2 tins of soup, bought today";
         Order result = parser.parse(input);
 
-        List<String> expectedItems = Arrays.asList("apple", "apple", "soup", "soup");
+        List<Item> expectedItems = toItems("apple", "apple", "soup", "soup");
         assertEquals(expectedItems, result.getItems());
     }
 
@@ -82,7 +82,15 @@ public class InputParserTests {
         String input = "2 apples, a loaf of bread and 2 tins of soup, bought today";
         Order result = parser.parse(input);
 
-        List<String> expectedItems = Arrays.asList("apple", "apple", "bread", "soup", "soup");
+        List<Item> expectedItems = toItems("apple", "apple", "bread", "soup", "soup");
         assertEquals(expectedItems, result.getItems());
+    }
+
+    private List<Item> toItems(String... itemNames){
+        List<Item> items = new ArrayList<>();
+        for (String itemName : itemNames) {
+            items.add(new Item(itemName));
+        }
+        return items;
     }
 }

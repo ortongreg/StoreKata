@@ -1,5 +1,6 @@
 package storekata;
 
+import storekata.models.Item;
 import storekata.models.Order;
 import storekata.repositories.ItemRepository;
 
@@ -32,7 +33,7 @@ public class InputParser {
         Matcher matcher = ORDER_PATTERN.matcher(order);
         matcher.matches();
 
-        List<String> items = parseItems(matcher.group(1));
+        List<Item> items = parseItems(matcher.group(1));
 
         String purchaseDayString = matcher.group(2);
         LocalDate purchaseDate = parsePurchaseDate(purchaseDayString);
@@ -40,8 +41,8 @@ public class InputParser {
         return new Order(purchaseDate, items);
     }
 
-    private List<String> parseItems(String itemsString){
-        List<String> result = new ArrayList<>();
+    private List<Item> parseItems(String itemsString){
+        List<Item> result = new ArrayList<>();
 
         List<String> purchasedTypes = Arrays.asList(itemsString.split("(and|,)\\s"));
         purchasedTypes.forEach(purchasedType -> {
@@ -50,10 +51,10 @@ public class InputParser {
         return result;
     }
 
-    private List<String> parseItem(String itemString){
-        List<String> result = new ArrayList<>();
-        String itemType = itemRepository.allItems().stream()
-                .filter(type -> itemString.toLowerCase(Locale.ROOT).contains(type))
+    private List<Item> parseItem(String itemString){
+        List<Item> result = new ArrayList<>();
+        Item itemType = itemRepository.allItems().stream()
+                .filter(type -> itemString.toLowerCase(Locale.ROOT).contains(type.getName()))
                 .collect(Collectors.toList()).get(0);
 
         Matcher matcher = ITEM_PATTERN.matcher(itemString);
